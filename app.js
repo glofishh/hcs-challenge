@@ -1,10 +1,26 @@
 const express = require('express');
-const app = express();
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-app.get('/', (req, res) => {
-  res.send('hello world!');
-});
+// import routes
+const userRoutes = require('./routes/user');
+
+// app
+const app = express();
+
+// db
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log('DB connected!'));
+mongoose
+  .connection.on('error', err => {
+    console.log(`DB connection error: ${err.message}`)});
+
+// routes middleware
+app.use("/api", userRoutes);
 
 const port = process.env.PORT || 8000
 
