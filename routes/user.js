@@ -6,7 +6,6 @@ const { requireSignin, isAuth } = require("../controllers/auth");
 const {
     userById,
     read,
-    update,
     getAllTasks
 } = require("../controllers/user");
 
@@ -16,9 +15,8 @@ router.get("/user/:userId", requireSignin, (req, res) => {
   });
 });
 
-// router.get("/user/:userId", requireSignin, isAuth, read);
-// router.put("/user/:userId", requireSignin, isAuth, update);
-// router.get("/tasks/by/user/:userId", requireSignin, isAuth, getAllTasks);
+router.get("/user/:userId", requireSignin, isAuth, read);
+router.get("/tasks/by/user/:userId", requireSignin, isAuth, getAllTasks);
 
 router.param("userId", userById);
 

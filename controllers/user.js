@@ -19,32 +19,14 @@ exports.read = (req, res) => {
   return res.json(req.profile);
 };
 
-exports.update = (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.profile._id },
-    { $set: req.body },
-    { new: true },
-    (err, user) => {
-      if (err) {
-        return res.status(400).json({
-          error: "You are not authorized to perform this action"
-        });
-      }
-      user.hashed_password = undefined;
-      user.salt = undefined;
-      res.json(user);
+exports.getAllTasks = (req, res) => {
+  User.find({user: req.profile._id}, (err, data) => { 
+    if (err) {
+      return res.status(400).json({
+      error: 'cannot retrieve all tasks of user'
+      });
     }
-  );
+    console.log(req.profile.tasks.length);
+    res.json(req.profile.tasks)
+  });
 };
-
-// exports.getAllTasks = (req, res) => {
-//   User.find({user: req.profile._id}, (err, data) => { 
-//     if (err) {
-//       return res.status(400).json({
-//       error: 'cannot retrieve all tasks of user'
-//       });
-//     }
-//     console.log(req.profile.tasks.length);
-//     res.json(req.profile.tasks)
-//   });
-// };
