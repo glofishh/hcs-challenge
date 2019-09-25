@@ -10,6 +10,7 @@ exports.signup = (req, res) => {
         error: errorHandler(err)
       });
     }
+    // hides salt and hashed password 
     user.salt = undefined;
     user.hashed_password = undefined;
     res.json({
