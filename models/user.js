@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true
     },
+    hashed_password: {
+      type: String,
+      required: true
+  },
     salt: String,
     tasks: {
       type: Array,
